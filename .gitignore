@@ -38,3 +38,5 @@ captures/
 .cxx/
 *.apk
 *.aab
+
+*-logic-reference/

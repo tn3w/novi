@@ -10,6 +10,46 @@ Open-source music player for Android.
 - Android 8.0+ (API 26)
 - Android Studio or Gradle 9.4+
 
+## Run in Emulator (no Android Studio)
+
+### One-time setup
+
+```bash
+# Install cmdline-tools
+cd /tmp
+curl -O https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip
+unzip commandlinetools-linux-13114758_latest.zip
+mkdir -p ~/Android/Sdk/cmdline-tools
+mv cmdline-tools ~/Android/Sdk/cmdline-tools/latest
+
+export ANDROID_HOME=~/Android/Sdk
+TOOLS=$ANDROID_HOME/cmdline-tools/latest/bin
+
+# Install a system image and create an AVD
+yes | $TOOLS/sdkmanager "system-images;android-35;google_apis;x86_64"
+echo "no" | $TOOLS/avdmanager create avd -n novi_avd \
+  -k "system-images;android-35;google_apis;x86_64" --device "pixel_6"
+```
+
+### Run
+
+```bash
+export ANDROID_HOME=~/Android/Sdk
+
+# Start emulator
+$ANDROID_HOME/emulator/emulator -avd novi_avd -no-snapshot-load &
+
+# Build APK
+./gradlew assembleDebug
+
+# Wait for boot, then install and launch
+until $ANDROID_HOME/platform-tools/adb shell getprop sys.boot_completed \
+  2>/dev/null | grep -q "1"; do sleep 3; done
+
+$ANDROID_HOME/platform-tools/adb install app/build/outputs/apk/debug/app-debug.apk
+$ANDROID_HOME/platform-tools/adb shell monkey -p com.tn3w.novi -c android.intent.category.LAUNCHER 1
+```
+
 ## Build
 
 ```bash
@@ -24,13 +64,26 @@ Open-source music player for Android.
 | Playback | Media3 ExoPlayer            |
 | Language | Kotlin 2.1                  |
 
+## UI
+
+**Bottom navigation bar** with 5 tabs: Home, Discover, Search, Library, Me.
+
+- Icons switch between outlined (unselected) and filled (selected)
+- Top edge fades to transparent via vertical gradient, blending into page content
+- Adapts to dark and light mode via `NoviTheme` (purple accent `#E040FB` / `#BB00D4`)
+- Theme defined in `ui/theme/Theme.kt` + `ui/theme/Color.kt`
+- `BottomNavBar` composable in `ui/components/BottomNavBar.kt`
+
 ## Project Structure
 
 ```
 novi/
 ├── app/
 │   ├── src/main/
-│   │   ├── java/com/tn3w/novi/MainActivity.kt
+│   │   ├── java/com/tn3w/novi/
+│   │   │   ├── MainActivity.kt
+│   │   │   ├── ui/theme/          # Color.kt, Theme.kt (NoviTheme)
+│   │   │   └── ui/components/     # BottomNavBar.kt
 │   │   ├── res/
 │   │   │   ├── drawable/      # adaptive icon assets (dark bg + play triangle)
 │   │   │   ├── mipmap-anydpi-v26/  # ic_launcher + ic_launcher_round
