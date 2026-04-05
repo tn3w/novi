@@ -2,6 +2,7 @@ package com.tn3w.novi.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,7 +56,7 @@ fun NowPlayingBar(
     val background = track.color.copy(alpha = 1f)
     val iconTint = Color.White
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp)
@@ -116,11 +117,18 @@ fun NowPlayingBar(
         }
 
         Box(
+            contentAlignment = Alignment.BottomStart,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(3.dp)
-                .padding(horizontal = 0.dp)
+                .matchParentSize()
                 .onSizeChanged { barWidth = it.width.toFloat() }
+                .pointerInput(Unit) {
+                    detectTapGestures { offset ->
+                        if (barWidth > 0f) {
+                            progress = (offset.x / barWidth).coerceIn(0f, 1f)
+                        }
+                    }
+                }
                 .pointerInput(Unit) {
                     detectHorizontalDragGestures { change, _ ->
                         if (barWidth > 0f) {
