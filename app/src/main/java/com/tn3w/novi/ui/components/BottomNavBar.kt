@@ -1,7 +1,8 @@
 package com.tn3w.novi.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
@@ -48,13 +49,23 @@ fun BottomNavBar(
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val background = MaterialTheme.colorScheme.background
+    val surface = MaterialTheme.colorScheme.surface
+    val gradient = Brush.verticalGradient(
+        0.0f to surface.copy(alpha = 0f),
+        0.1f to surface.copy(alpha = 0.6f),
+        0.35f to surface.copy(alpha = 0.9f),
+        0.5f to surface,
+    )
 
-    Column(modifier = modifier.fillMaxWidth()) {
-        FadeGradient(background)
-
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(120.dp)
+            .background(gradient),
+        contentAlignment = androidx.compose.ui.Alignment.BottomCenter,
+    ) {
         NavigationBar(
-            containerColor = background,
+            containerColor = Color.Transparent,
             tonalElevation = 0.dp,
         ) {
             navItems.forEachIndexed { index, item ->
@@ -64,31 +75,25 @@ fun BottomNavBar(
                     onClick = { onSelect(index) },
                     icon = {
                         Icon(
-                            imageVector = if (selected) item.filled else item.outlined,
+                            imageVector = if (selected)
+                                item.filled else item.outlined,
                             contentDescription = item.label,
                         )
                     },
                     label = { Text(item.label) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MaterialTheme.colorScheme.primary,
-                        selectedTextColor = MaterialTheme.colorScheme.primary,
-                        unselectedIconColor = MaterialTheme.colorScheme.onSurface,
-                        unselectedTextColor = MaterialTheme.colorScheme.onSurface,
+                        selectedIconColor =
+                            MaterialTheme.colorScheme.primary,
+                        selectedTextColor =
+                            MaterialTheme.colorScheme.primary,
+                        unselectedIconColor =
+                            MaterialTheme.colorScheme.onSurface,
+                        unselectedTextColor =
+                            MaterialTheme.colorScheme.onSurface,
                         indicatorColor = Color.Transparent,
                     ),
                 )
             }
         }
     }
-}
-
-@Composable
-private fun FadeGradient(background: Color) {
-    val gradient = Brush.verticalGradient(listOf(Color.Transparent, background))
-    androidx.compose.foundation.layout.Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(64.dp)
-            .background(gradient),
-    )
 }

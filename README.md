@@ -107,3 +107,7 @@ Media3 (ExoPlayer + Session) in version catalog, ready to add when needed
 `org.gradle.java.home` set to Java 17 in gradle.properties — AGP 8.x is incompatible with Java 26
 Gradle 9.4.0 wrapper, configuration cache + parallel builds enabled
 Permissions pre-declared: `READ_MEDIA_AUDIO, FOREGROUND_SERVICE_MEDIA_PLAYBACK`
+
+## Credits
+
+Design inspired by https://www.youtube.com/watch?v=suhEIUapSJQ
