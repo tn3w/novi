@@ -2,8 +2,8 @@ package com.tn3w.novi.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple = Color(0xFFE040FB)
-val PurpleDark = Color(0xFFBB00D4)
+val Green = Color(0xFF33CC33)
+val GreenDark = Color(0xFF1A8A1A)
 
 val DarkBackground = Color(0xFF0A0A0A)
 val DarkSurface = Color(0xFF141414)

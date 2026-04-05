@@ -7,7 +7,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 private val DarkColors = darkColorScheme(
-    primary = Purple,
+    primary = Green,
     background = DarkBackground,
     surface = DarkSurface,
     onSurface = DarkOnSurface,
@@ -15,7 +15,7 @@ private val DarkColors = darkColorScheme(
 )
 
 private val LightColors = lightColorScheme(
-    primary = PurpleDark,
+    primary = GreenDark,
     background = LightBackground,
     surface = LightSurface,
     onSurface = LightOnSurface,
