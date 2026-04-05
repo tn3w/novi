@@ -70,9 +70,17 @@ $ANDROID_HOME/platform-tools/adb shell monkey -p com.tn3w.novi -c android.intent
 
 - Icons switch between outlined (unselected) and filled (selected)
 - Top edge fades to transparent via vertical gradient, blending into page content
-- Adapts to dark and light mode via `NoviTheme` (purple accent `#E040FB` / `#BB00D4`)
+- Adapts to dark and light mode via `NoviTheme` (green accent)
 - Theme defined in `ui/theme/Theme.kt` + `ui/theme/Color.kt`
 - `BottomNavBar` composable in `ui/components/BottomNavBar.kt`
+
+**Now Playing** — mini bar + full-page player in `NowPlayingSheet.kt`.
+
+- Tap mini bar to expand into full-screen player with spring animation
+- Full player: down arrow, playlist name, large album art, track info, like/add buttons, seek bar with thumb, toggleable time display, shuffle/prev/play/next/repeat controls, bottom action row (device, share, lyrics, queue, more)
+- Background uses the track's dominant color
+- Bottom nav and mini bar hide when player is expanded
+- Swipe down or tap arrow to collapse back
 
 ## Project Structure
 

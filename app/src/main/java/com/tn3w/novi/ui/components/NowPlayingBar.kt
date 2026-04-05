@@ -42,6 +42,7 @@ data class NowPlayingTrack(
     val title: String,
     val artist: String,
     val color: Color,
+    val playlistName: String = "",
 )
 
 @Composable
